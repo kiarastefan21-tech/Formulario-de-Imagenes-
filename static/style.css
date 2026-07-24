@@ -1,0 +1,242 @@
+.hidden {
+    display: none !important;
+}
+.equipment-block {
+    overflow: hidden;
+    margin-bottom: 28px;
+    border: 1px solid #b5b5b5;
+    border-radius: 7px;
+    background: white;
+}
+
+.equipment-title {
+    width: 40%;
+    padding: 16px;
+    border-bottom: 1px solid #b5b5b5;
+    background: #e7e7e7;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1.3;
+}
+
+.equipment-title.complete {
+    background: #dceede;
+    color: #135f27;
+}
+
+.equipment-title.complete::before {
+    content: "✓ ";
+    font-weight: bold;
+}
+
+.equipment-content {
+    padding: 18px 14px;
+}
+
+.equipment-content p {
+    margin-top: 0;
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+input[type="file"] {
+    display: none !important;
+}
+
+.photo-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+.photo-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+    min-height: 54px;
+    padding: 12px;
+    border: 2px solid #777777;
+    border-radius: 6px;
+    background: #efefef;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+}
+
+.camera-button {
+    background: #dcdcdc;
+    border-color: #555555;
+}
+
+.gallery-button {
+    background: white;
+}
+
+.photo-button:active {
+    background: #cccccc;
+}
+
+.photo-count {
+    margin-top: 16px !important;
+    margin-bottom: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px !important;
+}
+
+.preview-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.preview-item {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #777777;
+    border-radius: 5px;
+    background: #eeeeee;
+}
+
+.preview-item img {
+    display: block;
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.remove-photo {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid #660000;
+    border-radius: 50%;
+    background: #a90000;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+@media (min-width: 700px) {
+    .photo-actions {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .preview-container {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+/* Tamaño compacto para los equipos */
+
+main {
+    max-width: 680px;
+}
+
+.equipment-block {
+    width: 100%;
+    margin-bottom: 18px;
+}
+
+.equipment-title {
+    width: 100%;
+    padding: 11px 14px;
+    font-size: 18px;
+}
+
+.equipment-content {
+    padding: 12px 14px;
+}
+
+.equipment-content p {
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+
+.photo-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.photo-button {
+    width: auto;
+    min-height: 42px;
+    padding: 8px 12px;
+    font-size: 15px;
+}
+
+.photo-count {
+    margin-top: 12px !important;
+    font-size: 14px !important;
+}
+
+.preview-container {
+    margin-top: 12px;
+}
+
+.preview-item img {
+    height: 125px;
+}
+
+@media (max-width: 500px) {
+    main {
+        padding: 18px 12px 50px;
+    }
+
+    .equipment-block {
+        margin-bottom: 16px;
+    }
+
+    .photo-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .photo-button {
+        width: 100%;
+        min-height: 44px;
+        padding: 7px 8px;
+        font-size: 14px;
+    }
+}
+.report-images img {
+    display: block;
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    object-position: center;
+    border: 1px solid #777777;
+    border-radius: 4px;
+    background: #f1f1f1;
+}
+.report-images {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    align-items: stretch;
+}
+
+.report-equipment {
+    width: 100%;
+    margin-bottom: 28px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+@media (max-width: 600px) {
+    .report-images {
+        grid-template-columns: 1fr;
+    }
+
+    .report-images img {
+        height: 230px;
+    }
+}
