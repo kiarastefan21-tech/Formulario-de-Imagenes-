@@ -211,9 +211,8 @@ main {
 .report-images img {
     display: block;
     width: 100%;
-    height: 260px;
-    object-fit: cover;
-    object-position: center;
+    height: auto;
+    aspect-ratio: 4 / 3;
     border: 1px solid #777777;
     border-radius: 4px;
     background: #f1f1f1;
@@ -222,7 +221,7 @@ main {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
-    align-items: stretch;
+    align-items: start;
 }
 
 .report-equipment {
@@ -235,6 +234,7 @@ main {
     .report-images {
         grid-template-columns: 1fr;
     }
+} 
 
     .report-images img {
         height: 230px;
