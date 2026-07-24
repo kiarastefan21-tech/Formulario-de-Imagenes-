@@ -266,3 +266,48 @@ main {
         aspect-ratio: auto !important;
     }
 }
+/*
+    Cada equipo comienza en una página diferente.
+    El primer equipo permanece junto al título Pista o Tienda.
+*/
+
+.section-first-page {
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+.report-equipment.new-pdf-page {
+    break-before: page;
+    page-break-before: always;
+}
+
+.report-section + .report-section {
+    break-before: page;
+    page-break-before: always;
+}
+
+.report-section-title {
+    break-after: avoid;
+    page-break-after: avoid;
+}
+
+.report-equipment h3 {
+    break-after: avoid;
+    page-break-after: avoid;
+}
+
+.report-images {
+    break-before: avoid;
+    page-break-before: avoid;
+}
+
+.missing-report-photo {
+    padding: 25px;
+    border: 2px dashed #999999;
+    border-radius: 5px;
+    background: #f2f2f2;
+    color: #555555;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    text-align: center;
+}
