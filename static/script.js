@@ -715,10 +715,16 @@ document
                 orientation: "portrait"
             },
 
-            pagebreak: {
-                mode: ["css", "legacy"],
-                avoid: [".report-equipment"]
-            }
+pagebreak: {
+    mode: ["css", "legacy"],
+    before: [".new-pdf-page"],
+    avoid: [
+        ".section-first-page",
+        ".report-section-title",
+        ".report-equipment h3",
+        ".report-images"
+    ]
+}
         };
 
         try {
