@@ -236,7 +236,33 @@ main {
     }
 } 
 
+}
+/* CORRECCIÓN FINAL PARA LAS IMÁGENES DEL PDF */
+
+.report-images {
+    display: block !important;
+    width: 100% !important;
+}
+
+.report-images img {
+    display: block !important;
+    width: 100% !important;
+    max-width: 520px !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 auto 14px !important;
+    object-fit: initial !important;
+    aspect-ratio: auto !important;
+    border: 1px solid #777777;
+    border-radius: 4px;
+}
+
+@media (max-width: 600px) {
     .report-images img {
-        height: 230px;
+        width: 100% !important;
+        max-width: 520px !important;
+        height: auto !important;
+        max-height: none !important;
+        aspect-ratio: auto !important;
     }
 }
