@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    >
+
+    <title>Formulario de Imágenes</title>
+
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <main id="formView">
+        <h1>Formulario de Imágenes</h1>
+
+        <form id="inspectionForm">
+            <div class="field">
+                <label for="stationName">
+                    Nombre de Estación:
+                </label>
+                <br>
+                <input
+                    type="text"
+                    id="stationName"
+                    name="station_name"
+                    autocomplete="organization"
+                    required
+                >
+            </div>
+            <br><br>
+
+            <div class="field">
+                <label for="inspectionDate">
+                    Fecha:
+                </label>
+                <br>
+                <input
+                    type="date"
+                    id="inspectionDate"
+                    name="inspection_date"
+                    required
+                >
+            </div>
+<br><br>
+            <div class="field">
+                <label for="inspectorName">
+                    Nombre de Inspector:
+                </label>
+                <br>
+                <input
+                    type="text"
+                    id="inspectorName"
+                    name="inspector_name"
+                    autocomplete="name"
+                    required
+                >
+            </div>
+
+            <h2>
+                Brinda las imágenes de los siguientes equipos
+            </h2>
+
+            <section>
+                <h2 class="category-title">Pista</h2>
+
+                <p class="instructions">
+                    Agrega por lo menos una imagen para cada equipo.
+                </p>
+
+                <div id="trackEquipment"></div>
+            </section>
+
+            <section class="store-area">
+                <h2 class="category-title">Tienda</h2>
+
+                <div class="store-question">
+                    <p>¿Agregar Fotos de Tienda?</p>
+
+                    <div class="radio-options">
+                        <label class="radio-option">
+                            <input
+                                type="radio"
+                                name="has_store"
+                                value="yes"
+                                required
+                            >
+                            Sí
+                        </label>
+
+                        <label class="radio-option">
+                            <input
+                                type="radio"
+                                name="has_store"
+                                value="no"
+                                required
+                            >
+                            No
+                        </label>
+                    </div>
+                </div>
+
+                <div id="storeSection" class="hidden">
+                    <p class="instructions">
+                        Agrega por lo menos una imagen para cada área
+                        de tienda.
+                    </p>
+
+                    <div id="storeEquipment"></div>
+                </div>
+            </section>
+
+            <div id="errorMessage" class="error-message"></div>
+
+            <button type="submit" class="submit-button">
+                Entregar
+            </button>
+        </form>
+    </main>
+
+    <main id="reportView" class="hidden">
+        <div id="pdfReport">
+            <div class="report-header">
+                <h1>Reporte de Imágenes</h1>
+                <p>Evidencia fotográfica de inspección</p>
+            </div>
+
+            <div id="reportInformation"></div>
+            <div id="reportContent"></div>
+        </div>
+
+        <div class="report-actions">
+            <button
+                type="button"
+                id="downloadPdfButton"
+                class="download-button"
+            >
+                Descargar como PDF
+            </button>
+
+            <button
+                type="button"
+                id="backButton"
+                class="back-button"
+            >
+                Regresar al formulario
+            </button>
+        </div>
+    </main>
+
+    <div id="loadingMessage" class="loading-message hidden">
+        <div class="loading-box">
+            <div class="spinner"></div>
+            <p>Preparando el PDF...</p>
+        </div>
+    </div>
+
+    <script
+        src="{{ url_for('static', filename='script.js') }}"
+    ></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="/static/script.js"></script>
+
+</body>
+</html>
