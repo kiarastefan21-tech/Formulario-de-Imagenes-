@@ -189,36 +189,64 @@ function compressImage(file, callback) {
         const image = new Image();
 
         image.addEventListener("load", function () {
-            const maximumWidth = 1600;
-            const maximumHeight = 1600;
-
-            let width = image.width;
-            let height = image.height;
-
-            if (width > maximumWidth || height > maximumHeight) {
-                const ratio = Math.min(
-                    maximumWidth / width,
-                    maximumHeight / height
-                );
-
-                width = Math.round(width * ratio);
-                height = Math.round(height * ratio);
-            }
+            /*
+                Todas las fotografías se convierten físicamente
+                a un tamaño 4:3 para evitar que el PDF las estire.
+            */
+            const outputWidth = 1200;
+            const outputHeight = 900;
 
             const canvas = document.createElement("canvas");
             const context = canvas.getContext("2d");
 
-            canvas.width = width;
-            canvas.height = height;
+            canvas.width = outputWidth;
+            canvas.height = outputHeight;
 
-            context.drawImage(image, 0, 0, width, height);
+            const sourceRatio = image.width / image.height;
+            const outputRatio = outputWidth / outputHeight;
 
-            const compressedImage = canvas.toDataURL(
-                "image/jpeg",
-                0.8
+            let sourceX = 0;
+            let sourceY = 0;
+            let sourceWidth = image.width;
+            let sourceHeight = image.height;
+
+            if (sourceRatio > outputRatio) {
+                /*
+                    La fotografía es demasiado ancha.
+                    Se recortan los lados.
+                */
+                sourceWidth = image.height * outputRatio;
+                sourceX = (image.width - sourceWidth) / 2;
+            } else {
+                /*
+                    La fotografía es demasiado alta.
+                    Se recortan la parte superior e inferior.
+                */
+                sourceHeight = image.width / outputRatio;
+                sourceY = (image.height - sourceHeight) / 2;
+            }
+
+            context.fillStyle = "#ffffff";
+            context.fillRect(0, 0, outputWidth, outputHeight);
+
+            context.drawImage(
+                image,
+                sourceX,
+                sourceY,
+                sourceWidth,
+                sourceHeight,
+                0,
+                0,
+                outputWidth,
+                outputHeight
             );
 
-            callback(compressedImage);
+            const normalizedImage = canvas.toDataURL(
+                "image/jpeg",
+                0.82
+            );
+
+            callback(normalizedImage);
         });
 
         image.src = reader.result;
