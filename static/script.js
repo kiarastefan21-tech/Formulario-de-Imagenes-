@@ -369,6 +369,31 @@ function showErrors(errors) {
         block: "center"
     });
 }
+function showPhotoWarnings(warnings) {
+    errorMessage.innerHTML = `
+        <strong>Fotografías pendientes:</strong>
+
+        <ul>
+            ${warnings
+                .map(function (warning) {
+                    return `<li>${warning}</li>`;
+                })
+                .join("")}
+        </ul>
+
+        <p>
+            Puedes agregar las fotografías pendientes o volver a
+            presionar Entregar para continuar sin ellas.
+        </p>
+    `;
+
+    errorMessage.classList.add("visible");
+
+    errorMessage.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+}
 
 function clearErrors() {
     errorMessage.classList.remove("visible");
@@ -397,55 +422,87 @@ inspectionForm.addEventListener("submit", function (event) {
         'input[name="has_store"]:checked'
     );
 
-    const errors = [];
+    const requiredErrors = [];
+    const missingPhotoWarnings = [];
 
+    /*
+        Estos datos sí son obligatorios.
+    */
     if (!stationName) {
-        errors.push("Ingresa el nombre de la estación.");
+        requiredErrors.push(
+            "Ingresa el nombre de la estación."
+        );
     }
 
     if (!inspectionDate) {
-        errors.push("Selecciona la fecha.");
+        requiredErrors.push(
+            "Selecciona la fecha."
+        );
     }
 
     if (!inspectorName) {
-        errors.push("Ingresa el nombre del inspector.");
+        requiredErrors.push(
+            "Ingresa el nombre del inspector."
+        );
     }
 
     if (!storeAnswer) {
-        errors.push("Indica si deseas agregar fotos de tienda.");
+        requiredErrors.push(
+            "Indica si deseas agregar fotos de tienda."
+        );
     }
 
+    /*
+        Si faltan datos generales, no se puede entregar.
+    */
+    if (requiredErrors.length > 0) {
+        showErrors(requiredErrors);
+        return;
+    }
+
+    /*
+        Las fotografías faltantes solamente generan
+        una advertencia. No bloquean la entrega.
+    */
     const missingTrackPhotos = getMissingPhotos(
         trackItems,
         "track"
     );
 
     if (missingTrackPhotos.length > 0) {
-        errors.push(
-            "Faltan imágenes de pista: " +
+        missingPhotoWarnings.push(
+            "Faltan fotos de pista: " +
             missingTrackPhotos.join(", ") +
             "."
         );
     }
 
-    if (storeAnswer && storeAnswer.value === "yes") {
+    if (storeAnswer.value === "yes") {
         const missingStorePhotos = getMissingPhotos(
             storeItems,
             "store"
         );
 
         if (missingStorePhotos.length > 0) {
-            errors.push(
-                "Faltan imágenes de tienda: " +
+            missingPhotoWarnings.push(
+                "Faltan fotos de tienda: " +
                 missingStorePhotos.join(", ") +
                 "."
             );
         }
     }
 
-    if (errors.length > 0) {
-        showErrors(errors);
-        return;
+    if (missingPhotoWarnings.length > 0) {
+        const continueDelivery = window.confirm(
+            "ADVERTENCIA\n\n" +
+            missingPhotoWarnings.join("\n\n") +
+            "\n\n¿Deseas entregar el formulario de todas maneras?"
+        );
+
+        if (!continueDelivery) {
+            showPhotoWarnings(missingPhotoWarnings);
+            return;
+        }
     }
 
     createReport({
@@ -481,35 +538,64 @@ function escapeHtml(value) {
 function createReportSection(title, items, section) {
     return `
         <section class="report-section">
-            <h2 class="report-section-title">
-                ${title}
-            </h2>
+            <div class="section-first-page">
+                <h2 class="report-section-title">
+                    ${title}
+                </h2>
+
+                ${createReportEquipment(
+                    items[0],
+                    section,
+                    true
+                )}
+            </div>
 
             ${items
+                .slice(1)
                 .map(function (item) {
-                    const itemPhotos = photos[section][item];
-
-                    return `
-                        <article class="report-equipment">
-                            <h3>${item}</h3>
-
-                            <div class="report-images">
-                                ${itemPhotos
-                                    .map(function (photo) {
-                                        return `
-                                            <img
-                                                src="${photo.source}"
-                                                alt="Evidencia de ${item}"
-                                            >
-                                        `;
-                                    })
-                                    .join("")}
-                            </div>
-                        </article>
-                    `;
+                    return createReportEquipment(
+                        item,
+                        section,
+                        false
+                    );
                 })
                 .join("")}
         </section>
+    `;
+}
+
+function createReportEquipment(item, section, isFirst) {
+    const itemPhotos = photos[section][item];
+
+    const imagesHtml = itemPhotos.length > 0
+        ? itemPhotos
+            .map(function (photo) {
+                return `
+                    <img
+                        src="${photo.source}"
+                        alt="Evidencia de ${item}"
+                    >
+                `;
+            })
+            .join("")
+        : `
+            <div class="missing-report-photo">
+                No se agregó ninguna fotografía para este equipo.
+            </div>
+        `;
+
+    return `
+        <article
+            class="report-equipment ${
+                isFirst ? "first-equipment" : "new-pdf-page"
+            }"
+        >
+            <h3>${item}</h3>
+
+            <div class="report-images">
+                ${imagesHtml}
+            </div>
+        </article>
     `;
 }
 
