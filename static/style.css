@@ -350,3 +350,69 @@ main {
     font-size: 27px !important;
     line-height: 1.2 !important;
 }
+
+/* COMENTARIOS OPCIONALES DE CADA EQUIPO */
+
+.equipment-comment {
+    margin-top: 18px;
+}
+
+.equipment-comment label {
+    display: block;
+    margin-bottom: 7px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.equipment-comment label span {
+    color: #666666;
+    font-size: 13px;
+    font-weight: normal;
+}
+
+.equipment-comment textarea {
+    display: block;
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    border: 1px solid #888888;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #111111;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.4;
+    resize: vertical;
+}
+
+.equipment-comment textarea:focus {
+    outline: 3px solid rgba(0, 0, 0, 0.12);
+    border-color: #333333;
+}
+
+
+/* COMENTARIOS EN EL REPORTE Y PDF */
+
+.report-comment {
+    margin-top: 16px;
+    padding: 13px 15px;
+    border-left: 4px solid #777777;
+    background: #f1f1f1;
+    font-family: Arial, Helvetica, sans-serif;
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+.report-comment strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 15px;
+}
+
+.report-comment p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.45;
+    white-space: pre-wrap;
+}
