@@ -373,7 +373,7 @@ main {
 
 .equipment-comment textarea {
     display: block;
-    width: 100%;
+    width: 80%;
     min-height: 80px;
     padding: 10px;
     border: 1px solid #888888;
