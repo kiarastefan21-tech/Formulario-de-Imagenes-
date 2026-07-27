@@ -114,6 +114,20 @@ function createEquipmentBlock(item, section) {
                 >
                     No se han agregado imágenes.
                 </p>
+
+                <div class="equipment-comment">
+                    <label for="${id}-comment">
+                        Comentarios <span>(opcional)</span>
+                    </label>
+
+                    <textarea
+                        id="${id}-comment"
+                        data-section="${section}"
+                        data-item="${item}"
+                        rows="3"
+                        placeholder="Escribe observaciones adicionales..."
+                    ></textarea>
+                </div>
             </div>
         </div>
     `;
@@ -567,6 +581,15 @@ function createReportSection(title, items, section) {
 function createReportEquipment(item, section, isFirst) {
     const itemPhotos = photos[section][item];
 
+    const commentId =
+        section + "-" + createSafeId(item) + "-comment";
+
+    const commentElement = document.getElementById(commentId);
+
+    const comment = commentElement
+        ? commentElement.value.trim()
+        : "";
+
     const imagesHtml = itemPhotos.length > 0
         ? itemPhotos
             .map(function (photo) {
@@ -584,6 +607,19 @@ function createReportEquipment(item, section, isFirst) {
             </div>
         `;
 
+    /*
+        El comentario solamente se agrega al reporte
+        cuando el usuario escribió algo.
+    */
+    const commentHtml = comment
+        ? `
+            <div class="report-comment">
+                <strong>Comentarios:</strong>
+                <p>${escapeHtml(comment)}</p>
+            </div>
+        `
+        : "";
+
     return `
         <article
             class="report-equipment ${
@@ -595,6 +631,8 @@ function createReportEquipment(item, section, isFirst) {
             <div class="report-images">
                 ${imagesHtml}
             </div>
+
+            ${commentHtml}
         </article>
     `;
 }
